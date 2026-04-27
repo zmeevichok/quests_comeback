@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quests Web - Деплой на Vercel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #2a2a2a;
+            color: white;
+        }
+        .step {
+            background-color: #3a3a3a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .code {
+            background-color: #1a1a1a;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+        .button {
+            background-color: #0070f3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        .button:hover {
+            background-color: #0051a2;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Деплой Quests Web на Vercel</h1>
+    
+    <div class="step">
+        <h2>1. Подготовка</h2>
+        <p>Убедись, что у тебя есть аккаунт на <a href="https://vercel.com" target="_blank" style="color: #0070f3;">vercel.com</a></p>
+    </div>
+
+    <div class="step">
+        <h2>2. Создание репозитория на GitHub</h2>
+        <p>1. Зайди на <a href="https://github.com" target="_blank" style="color: #0070f3;">github.com</a></p>
+        <p>2. Создай новый репозиторий "quests-web"</p>
+        <p>3. Загрузи все файлы проекта</p>
+    </div>
+
+    <div class="step">
+        <h2>3. Деплой через Vercel</h2>
+        <p>1. Зайди на <a href="https://vercel.com" target="_blank" style="color: #0070f3;">vercel.com</a></p>
+        <p>2. Нажми "New Project"</p>
+        <p>3. Подключи GitHub репозиторий</p>
+        <p>4. Выбери папку с проектом</p>
+        <p>5. Нажми "Deploy"</p>
+    </div>
+
+    <div class="step">
+        <h2>4. Настройка Google OAuth</h2>
+        <p>После деплоя получишь URL вида: <code>https://quests-web-abc123.vercel.app</code></p>
+        <p>В Google Console добавь:</p>
+        <div class="code">
+            Authorized redirect URIs:<br>
+            https://your-url.vercel.app/google-callback<br><br>
+            Authorized JavaScript origins:<br>
+            https://your-url.vercel.app
+        </div>
+    </div>
+
+    <div class="step">
+        <h2>5. Альтернативный способ - через Vercel CLI</h2>
+        <p>Если npm работает, попробуй:</p>
+        <div class="code">
+            npm install -g vercel<br>
+            vercel login<br>
+            vercel
+        </div>
+    </div>
+
+    <div class="step">
+        <h2>✅ Готово!</h2>
+        <p>После деплоя OAuth будет работать с реальным доменом</p>
+        <a href="https://vercel.com" target="_blank" class="button">Перейти на Vercel</a>
+        <a href="https://github.com" target="_blank" class="button">Перейти на GitHub</a>
+    </div>
+</body>
+</html>
+
+

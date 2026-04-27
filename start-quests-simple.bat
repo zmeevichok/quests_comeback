@@ -1,0 +1,9 @@
+@echo off
+echo Запуск Quests Web...
+cd /d "F:\Projects\zmeevik\Quests Web"
+start "Quests Web Server" cmd /k "npm run dev"
+echo Ожидание запуска сервера...
+timeout /t 3 /nobreak >nul
+echo Открытие сайта...
+start http://localhost:5173
+echo Готово!
