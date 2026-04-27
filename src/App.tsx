@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Quest, QuestInstance, User, GoogleUserData } from './types';
+import { Quest, QuestInstance, User } from './types';
 import UserProfile from './components/UserProfile';
 import QuestCard from './components/QuestCard';
-import LoginPage from './components/LoginPage';
-import GoogleCallback from './components/GoogleCallback';
 import './App.css';
 
 // Начальные данные
@@ -47,7 +45,6 @@ const initialQuests: Quest[] = [
 ];
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User>({
     name: 'Имя',
     surname: 'Фамилия',
@@ -58,20 +55,19 @@ const App: React.FC = () => {
   const [activeQuests, setActiveQuests] = useState<QuestInstance[]>([]);
   const [completedQuests, setCompletedQuests] = useState<QuestInstance[]>([]);
 
-  // Проверяем, есть ли сохраненные данные пользователя
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      const userData = JSON.parse(savedUser);
-      setUser(userData);
-      setIsAuthenticated(true);
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch {
+        localStorage.removeItem('user');
+      }
     }
   }, []);
 
-  // Функция для выхода из системы
   const handleLogout = () => {
     localStorage.removeItem('user');
-    setIsAuthenticated(false);
     setUser({
       name: 'Имя',
       surname: 'Фамилия',
@@ -79,25 +75,9 @@ const App: React.FC = () => {
     });
   };
 
-  const handleGoogleLogin = (googleData: GoogleUserData) => {
-    const newUser: User = {
-      name: googleData.name,
-      surname: googleData.surname,
-      exp: 0,
-      avatar: googleData.avatar,
-      email: googleData.email
-    };
-    
-    setUser(newUser);
-    setIsAuthenticated(true);
-    
-    // Сохраняем данные пользователя в localStorage
-    localStorage.setItem('user', JSON.stringify(newUser));
-  };
-
   const handleTakeQuest = (quest: Quest) => {
     const newQuestInstance: QuestInstance = {
-      id: `${quest.id}-${Date.now()}`, // Уникальный ID для каждого экземпляра
+      id: `${quest.id}-${Date.now()}`,
       quest: quest,
       status: 'active'
     };
@@ -105,32 +85,23 @@ const App: React.FC = () => {
   };
 
   const handleCompleteQuest = (questInstance: QuestInstance) => {
-    // Удаляем из активных
     setActiveQuests(prev => prev.filter(q => q.id !== questInstance.id));
-    
-    // Добавляем в завершенные
+
     const completedInstance: QuestInstance = {
       ...questInstance,
       status: 'completed'
     };
     setCompletedQuests(prev => [...prev, completedInstance]);
-    
-    // Увеличиваем EXP пользователя
-    setUser(prev => ({
-      ...prev,
-      exp: prev.exp + questInstance.quest.expReward
-    }));
+
+    setUser(prev => {
+      const next = {
+        ...prev,
+        exp: prev.exp + questInstance.quest.expReward
+      };
+      localStorage.setItem('user', JSON.stringify(next));
+      return next;
+    });
   };
-
-  // Проверяем, если это callback от Google OAuth
-  if (window.location.pathname === '/google-callback') {
-    return <GoogleCallback />;
-  }
-
-  // Если пользователь не аутентифицирован, показываем страницу логина
-  if (!isAuthenticated) {
-    return <LoginPage onLogin={handleGoogleLogin} />;
-  }
 
   return (
     <div className="app">
@@ -153,7 +124,7 @@ const App: React.FC = () => {
 
         <div className="right-section">
           <UserProfile user={user} onLogout={handleLogout} />
-          
+
           <div className="quest-sections">
             <div className="quest-section">
               <h2 className="section-title">Активные</h2>

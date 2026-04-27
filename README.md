@@ -4,24 +4,17 @@
 
 ## Установка и запуск
 
-1. Скопируйте `.env.example` в `.env.local`
-
-2. Укажите `VITE_GOOGLE_CLIENT_ID` в `.env.local`:
-```env
-VITE_GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
-```
-
-3. Установите зависимости:
+1. Установите зависимости:
 ```bash
 npm install
 ```
 
-4. Запустите dev-сервер:
+2. Запустите dev-сервер:
 ```bash
 npm run dev
 ```
 
-5. Откройте браузер по адресу http://localhost:5173
+3. Откройте браузер по адресу http://localhost:5173
 
 ## Функциональность
 

@@ -18,10 +18,3 @@ export interface User {
   avatar?: string;
   email?: string;
 }
-
-export interface GoogleUserData {
-  name: string;
-  surname: string;
-  avatar: string;
-  email: string;
-}
